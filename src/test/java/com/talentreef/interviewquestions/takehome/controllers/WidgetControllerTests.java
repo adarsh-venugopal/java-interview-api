@@ -1,17 +1,11 @@
 package com.talentreef.interviewquestions.takehome.controllers;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.talentreef.interviewquestions.takehome.dto.WidgetDTO;
 import com.talentreef.interviewquestions.takehome.models.Widget;
-import com.talentreef.interviewquestions.takehome.respositories.WidgetRepository;
 import com.talentreef.interviewquestions.takehome.services.WidgetService;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +17,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.List;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -47,7 +45,12 @@ public class WidgetControllerTests {
   @Test
   public void when_getAllWidgets_expect_allWidgets() throws Exception {
     Widget widget = Widget.builder().name("Widget von Hammersmark").build();
-    List<Widget> allWidgets = List.of(widget);
+    WidgetDTO widgetDTO = new WidgetDTO(
+        widget.getName(),
+        widget.getDescription(),
+        widget.getPrice()
+    );
+    List<WidgetDTO> allWidgets = List.of(widgetDTO);
     when(widgetService.getAllWidgets()).thenReturn(allWidgets);
 
     MvcResult result = mockMvc.perform(get("/v1/widgets"))
@@ -55,8 +58,9 @@ public class WidgetControllerTests {
                .andDo(print())
                .andReturn();
 
-    List<Widget> parsedResult = objectMapper.readValue(result.getResponse().getContentAsString(),
-        new TypeReference<List<Widget>>(){});
+    List<WidgetDTO> parsedResult = objectMapper.readValue(result.getResponse().getContentAsString(),
+        new TypeReference<>() {
+        });
     assertThat(parsedResult).isEqualTo(allWidgets);
   }
 
