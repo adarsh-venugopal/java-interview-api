@@ -3,10 +3,12 @@ package com.talentreef.interviewquestions.takehome.controllers;
 import com.talentreef.interviewquestions.takehome.dto.WidgetDTO;
 import com.talentreef.interviewquestions.takehome.services.WidgetService;
 import java.util.List;
+import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @CrossOrigin
+@Validated
 @RequestMapping(value = "/v1/widgets", produces = MediaType.APPLICATION_JSON_VALUE)
 public class WidgetController {
 
@@ -46,14 +49,14 @@ public class WidgetController {
   }
 
   @PostMapping
-  public ResponseEntity<WidgetDTO> createWidget(@RequestBody WidgetDTO widgetDto) {
+  public ResponseEntity<WidgetDTO> createWidget(@Valid @RequestBody WidgetDTO widgetDto) {
     return ResponseEntity.ok(widgetService.createOrUpdateWidget(widgetDto));
   }
 
   @PutMapping("/{name}")
   public ResponseEntity<WidgetDTO> updateWidget(
       @PathVariable String name,
-      @RequestBody WidgetDTO widgetDto) {
+      @Valid @RequestBody WidgetDTO widgetDto) {
     return ResponseEntity.ok(widgetService.createOrUpdateWidget(widgetDto));
   }
 
