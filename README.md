@@ -1,8 +1,4 @@
-# TalentReef Java API Interview Template
-
-## Description
-
-This [Spring Boot](https://spring.io/projects/spring-boot) project is provided as a starting template for the TalentReef take-home interview. Feel free to make whatever modifications are necessary to complete the exercise.
+# RESTful API backed for the Widget App
 
 ## Requirements
 
@@ -16,14 +12,12 @@ Start the server using Gradle:
 ./gradlew bootRun
 ```
 
-See [Running your Application with Gradle](https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/htmlsingle/#running-your-application) for more information.
-
 Execute tests using Gradle:
 
 ```shell
 ./gradlew test
 ```
+## Assumptions / Notes
 
-## Additional Information
-
-TalentReef will provide you the contact information of a person who can answer questions about the exercise.
+* I have not made use of any database for persisting the widgets. It just stores the values in a List.
+* I have added 3 widgets by default just to show something initially. Feel free to delete.
