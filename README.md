@@ -1,4 +1,4 @@
-# RESTful API backed for the Widget App
+# RESTful API backend service for the Widget App
 
 ## Requirements
 
